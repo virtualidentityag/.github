@@ -28,7 +28,7 @@ jobs:
         id: tag_existance
         run: echo "##[set-output name=oldtag;]$(echo $(git tag -l "${{ steps.package-version.outputs.current-version }}"))"
 
-      - name: validate tag reference from github
+      - name: Validate tag reference from github
         if: ${{ steps.tag_existance.outputs.oldtag != '' }}
         run: exit 1
   release: 

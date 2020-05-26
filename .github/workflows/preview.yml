@@ -19,14 +19,14 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - name: move zip file
+      - name: Move zip file
         run: zip -r dist.zip ./dist; mv dist.zip dist/
         if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/integration'
 
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch_name
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
 
       - name: Extract repository name
         shell: bash
