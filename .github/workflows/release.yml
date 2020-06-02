@@ -74,4 +74,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: false
-          RELEASE_BRANCHES: github-actions-integration
+          CUSTOM_TAG: ${{ steps.package-version.outputs.current-version }}
+          RELEASE_BRANCHES: master
