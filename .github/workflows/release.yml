@@ -61,8 +61,8 @@ jobs:
       - name: Deploy to frontend.live
         uses: jakejarvis/s3-sync-action@v0.5.1
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_FRONTEND_LIVE }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_FRONTEND_LIVE }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_SECRET }}
           SOURCE_DIR: 'dist'
           DEST_DIR: '${{ steps.extract_repository_name.outputs.repository }}/releases/${{ steps.package-version.outputs.current-version}}'
 
