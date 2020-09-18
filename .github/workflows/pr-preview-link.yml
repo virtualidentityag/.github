@@ -1,0 +1,26 @@
+name: 👓 Preview Link
+
+on: pull_request
+
+jobs:
+  comment:
+    name: Comment preview link to PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch_name
+
+      - name: Extract repository name
+        shell: bash
+        id: extract_repository_name
+        run: echo "##[set-output name=repository;]$(echo ${GITHUB_REPOSITORY#*/})"
+
+      - name: Comment PR
+        uses: unsplash/comment-on-pr@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: 'Preview link 👓: [open](https://www.frontend.live/${{ steps.extract_repository_name.outputs.repository }}/${{ github.head_ref }}/index.html)'
+          check_for_duplicate_msg: false
