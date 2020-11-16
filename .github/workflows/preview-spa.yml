@@ -1,0 +1,62 @@
+name: Push
+
+on: [push]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  AWS_REGION: 'eu-central-1'
+  AWS_S3_BUCKET: 'frontend-live-preview-spa'
+
+jobs:
+  deploy:
+    name: Deploy to frontend.live Preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch_name
+
+      - name: Extract repository name
+        shell: bash
+        id: extract_repository_name
+        run: echo "##[set-output name=repository;]$(echo ${GITHUB_REPOSITORY#*/})"
+
+      - name: Replace slashes in branch name with dashes
+        uses: frabert/replace-string-action@v1.2
+        id: replace_branch_slashes_with_dashes
+        with:
+          pattern: '/'
+          string: '${{ steps.extract_branch_name.outputs.branch }}'
+          replace-with: '-'
+
+      - run: npm install
+      - run: npm run build
+        env:
+          CI: false
+          PUBLIC_URL: '/${{ steps.extract_repository_name.outputs.repository }}/${{ steps.replace_branch_slashes_with_dashes.outputs.replaced }}'
+
+      - name: Get current package version
+        uses: martinbeentjes/npm-get-version-action@v1.0.0
+        id: package-version
+
+      - name: Deploy to frontend.live
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_SECRET }}
+          SOURCE_DIR: 'build'
+          DEST_DIR: '${{ steps.extract_repository_name.outputs.repository }}/${{ steps.replace_branch_slashes_with_dashes.outputs.replaced }}'
+
+      - name: Invalidate CDN cache
+        uses: awact/cloudfront-action@0.1.2
+        env:
+          DISTRIBUTION_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_SPA_DISTRIBUTION_ID }}
+          SOURCE_DIR: '${{ steps.extract_repository_name.outputs.repository }}/${{ steps.extract_branch_name.outputs.branch }}'
+          AWS_ACCESS_KEY_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_SECRET }}
