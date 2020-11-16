@@ -30,5 +30,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: 'Preview link 👓: [open](https://www.spa.frontend.live/${{ steps.extract_repository_name.outputs.repository }}/${{ steps.replace_branch_slashes_with_dashes.outputs.replaced }}/)'
+          msg: 'Preview link 👓: [open](http://spa.frontend.live/${{ steps.extract_repository_name.outputs.repository }}/${{ steps.replace_branch_slashes_with_dashes.outputs.replaced }}/)'
           check_for_duplicate_msg: false
