@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      
+
       - name: Extract branch name
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
@@ -35,7 +35,19 @@ jobs:
           string: '${{ steps.extract_branch_name.outputs.branch }}'
           replace-with: '-'
 
-      - run: npm install
+      - name: Cache npm dependencies
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Run npm install (skipped if cache-hit exists)
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
       - run: npm run build
         env:
           CI: false
