@@ -1,0 +1,8 @@
+{
+    "name": "Virtual Identity Release Workflow",
+    "description": "Virtual Identity Release Workflow Template.",
+    "iconName": "vi-icon",
+    "categories": [
+        "Release"
+    ]
+}
