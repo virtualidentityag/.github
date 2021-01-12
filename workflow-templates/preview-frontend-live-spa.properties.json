@@ -1,0 +1,10 @@
+{
+    "name": "Deploy to frontend.live Preview (SPA)",
+    "description": "Virtual Identity Preview (SPA) Workflow Template.",
+    "iconName": "vi-icon",
+    "categories": [
+        "Deplyoment",
+        "Preview",
+        "SPA"
+    ]
+}

@@ -1,8 +1,9 @@
 {
-    "name": "Virtual Identity Release Workflow",
+    "name": "Create Release and deploy to frontend.live",
     "description": "Virtual Identity Release Workflow Template.",
     "iconName": "vi-icon",
     "categories": [
-        "Release"
+        "Release",
+        "Deplyoment"
     ]
 }

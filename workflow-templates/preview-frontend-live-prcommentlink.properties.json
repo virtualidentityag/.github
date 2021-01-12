@@ -1,0 +1,8 @@
+{
+    "name": "Comment Preview Link to PR",
+    "description": "Virtual Identity PR Comment Workflow Template.",
+    "iconName": "vi-icon",
+    "categories": [
+        "PR-Comment"
+    ]
+}

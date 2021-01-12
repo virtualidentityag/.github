@@ -1,0 +1,9 @@
+{
+    "name": "Deploy to frontend.live Preview",
+    "description": "Virtual Identity Preview Workflow Template.",
+    "iconName": "vi-icon",
+    "categories": [
+        "Deplyoment",
+        "Preview"
+    ]
+}
