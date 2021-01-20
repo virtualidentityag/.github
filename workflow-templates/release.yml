@@ -55,9 +55,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Run npm ci (skipped if cache-hit exists)
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+      - run: npm ci
 
       - run: npm run build
 
