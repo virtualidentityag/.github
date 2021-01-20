@@ -50,7 +50,7 @@ jobs:
         uses: actions/cache@v2
         id: cache
         with:
-          path: ~./npm
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/package.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
