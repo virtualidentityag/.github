@@ -1,6 +1,7 @@
 name: 👓 Preview Link
 
 on: pull_request
+types: [opened]
 
 jobs:
   comment:
