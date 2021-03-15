@@ -8,6 +8,7 @@ jobs:
   comment:
     name: Comment preview link to PR
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Extract branch name
         shell: bash

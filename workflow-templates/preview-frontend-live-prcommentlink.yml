@@ -8,6 +8,7 @@ jobs:
   comment:
     name: Add preview link to pull request
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Comment PR
         uses: unsplash/comment-on-pr@master
