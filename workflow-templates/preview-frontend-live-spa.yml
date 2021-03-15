@@ -52,6 +52,7 @@ jobs:
           PUBLIC_URL: '/${{ steps.extract_repository_name.outputs.repository }}/${{ steps.replace_branch_slashes_with_dashes.outputs.replaced }}'
 
       - name: Deploy to frontend.live
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: jakejarvis/s3-sync-action@v0.5.1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_ID }}
@@ -60,6 +61,7 @@ jobs:
           DEST_DIR: '${{ steps.extract_repository_name.outputs.repository }}/${{ steps.replace_branch_slashes_with_dashes.outputs.replaced }}'
 
       - name: Invalidate CDN cache
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: awact/cloudfront-action@0.1.2
         env:
           DISTRIBUTION_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_SPA_DISTRIBUTION_ID }}

@@ -39,6 +39,7 @@ jobs:
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
       - name: Deploy to frontend.live
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: jakejarvis/s3-sync-action@v0.5.1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_DEPLOY_AWS_ACCESS_ID }}
@@ -47,6 +48,7 @@ jobs:
           DEST_DIR: '${{ github.repository }}/${BRANCH_NAME}'
 
       - name: Invalidate CDN cache
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: awact/cloudfront-action@0.1.2
         env:
           DISTRIBUTION_ID: ${{ secrets.FRONTEND_LIVE_PREVIEW_DISTRIBUTION_ID }}
